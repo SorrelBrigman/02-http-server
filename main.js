@@ -2,12 +2,17 @@
 
 const { createServer } = require('http');
 const { createReadStream }  = require('fs');
-const readStream = createReadStream('index.html')
 
 const server = createServer((req, res)=>{
-  res.writeHead(200);
-  readStream.pipe(res);
 
+  const readStream = createReadStream('index.html')
+  readStream
+  .on('error', (err)=>{
+    res.end(error);
+  })
+  .on('open', ()=>{
+    readStream.pipe(res);
+  })
 });
 
 
